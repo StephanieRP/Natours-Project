@@ -20,6 +20,13 @@ gulp.task('sass', function () {
     }));
 });
 
+gulp.task('browser-sync', function(){
+  browserSync.init({
+    server: './',
+    notify: false,
+    open: true
+  });
+});
 
 gulp.task('sass:minify', function(){
   return gulp.src('./css/*.css')
@@ -29,15 +36,10 @@ gulp.task('sass:minify', function(){
     .pipe(gulp.dest('./css'))
 });
 
-gulp.task('browser-sync', function(){
-  browserSync.init({
-    server: './',
-    notify: false,
-    open: true
-  });
-});
 
-gulp.task('default', ['sass', 'sass:minify','browser-sync'], function () {
+gulp.task('default', ['sass', 'browser-sync', ], function () {
   gulp.watch('./sass/**/*.scss', ['sass']).on('change', browserSync.reload);
   gulp.watch("./*.html").on('change', browserSync.reload);
 });
+
+gulp.task('mini', ['sass:minify']);
